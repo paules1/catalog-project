@@ -26,8 +26,8 @@ Vagrant.configure("2") do |config|
     pip2 install flask packaging oauth2client redis passlib flask-httpauth
     pip2 install sqlalchemy flask-sqlalchemy psycopg2-binary bleach requests
 
-    su postgres -c 'createuser -dRS catalog'
-    su catalog -c 'createdb catalog'
+    su postgres -c 'createuser -dRS vagrant'
+    su vagrant -c 'createdb catalog'
 
     setupTip="[35m[1mThe shared directory is located at /catalog\\nTo access your shared files: cd /catalog[m"
     echo -e $setupTip > /etc/motd
