@@ -8,33 +8,37 @@ class TestDataMethods(unittest.TestCase):
 
     def test_user_create(self):
         ds = DataHelper()
-        user_id = ds.get_user_id('paules@mercabyte.com')
+        user_id = ds.get_user_id('jd@domain.com')
         if user_id is None:
             user_id = ds.create_user({
-                'username': 'Paul E Villacreces',
-                'email': 'paules@mercabyte.com',
-                'picture': 'None'
+                'username': 'John Doe',
+                'email': 'jd@domain.com',
+                'picture': ''
             })
-        self.assertEquals(ds.get_user_info(user_id).email, 'paules@mercabyte.com')
+        self.assertEquals(ds.get_user_info(user_id).email, 'jd@domain.com')
 
     def test_car_create(self):
         ds = DataHelper()
-        car_id = ds.get_car_id('Boxster', 1)
+        category_id = ds.get_category_id('Convertibles')
+        brand_id = ds.get_brand_id('Porsche')
+        user_id = ds.get_user_id('jd@domain.com')
+        car_id = ds.get_car_id('Boxster Test', user_id)
         if car_id is None:
             car_id = ds.create_car({
-                'model': 'Boxster',
+                'model': 'Boxster Test',
                 'price': '$25,000',
                 'description': '2011 Porsche Boxster, Red, Manual Transmission',
-                'category_id': 2,
-                'brand_id': 29,
-                'user_id': 1
+                'category_id': category_id,
+                'brand_id': brand_id,
+                'user_id': user_id
             })
-        self.assertEquals(ds.get_car_info(car_id).model, 'Boxster')
+        self.assertEquals(ds.get_car_info(car_id).model, 'Boxster Test')
 
     def test_delete_car(self):
         ds = DataHelper()
-        car_id = ds.get_car_id('Boxster', 1)
-        result = ds.delete_car(car_id, 1)
+        user_id = ds.get_user_id('jd@domain.com')
+        car_id = ds.get_car_id('Boxster Test', user_id)
+        result = ds.delete_car(car_id, user_id)
         self.assertTrue(result > 0)
 
     def test_categories_list(self):

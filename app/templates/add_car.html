@@ -1,0 +1,61 @@
+{% extends "layout.html" %}
+{% block body %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="d-block p-2 mb-2 bg-dark text-white">Add Car Listing</div>
+            <form method="POST" action="{{ url_for('add_car')}}" class="needs-validation" novalidate>
+                <div class="form-group">
+                    <label for="category">Category</label>
+                    <select class="form-control" id="category" required>
+                        <option value="" selected disabled>Select a category</option>
+                        {% for category in categories %}
+                        <option value="{{ category.id }}">{{ category.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="category">Brand</label>
+                    <select class="form-control" id="brand" required>
+                        <option value="" selected disabled>Select a brand</option>
+                        {% for brand in brands %}
+                        <option value="{{ brand.id }}">{{ brand.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="model">Model</label>
+                    <input type="text" class="form-control" id="model" aria-describedby="modelHelp" placeholder="Ex: Boxster S 2011" required>
+                    <small id="modelHelp" class="form-text text-muted">Model name should be unique among your listings.</small>
+                </div>
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <input type="text" class="form-control" id="description" aria-describedby="descriptionHelp" placeholder="Ex: Black, 30K miles, Manual Transmission" required>
+                    <small id="descriptionHelp" class="form-text text-muted">Add comma separated items.</small>
+                </div>
+                <div class="form-group">
+                    <label for="description">Price</label>
+                    <input type="text" class="form-control" id="price" aria-describedby="priceHelp" placeholder="Ex: $10,000" required>
+                    <small id="descriptionHelp" class="form-text text-muted">Use comma for thousands.</small>
+                </div>
+              <button type="submit" class="btn btn-primary">Continue >></button>
+            </form>
+        </div>
+    </div>
+    <script>
+        (function() {
+              'use strict';
+              window.addEventListener('load', function() {
+                  let forms = document.getElementsByClassName('needs-validation');
+                  let validation = Array.prototype.filter.call(forms, function(form) {
+                      form.addEventListener('submit', function(event) {
+                          if (form.checkValidity() === false) {
+                              event.preventDefault();
+                              event.stopPropagation();
+                          }
+                          form.classList.add('was-validated');
+                      },false);
+                  });
+              }, false);
+        })();
+    </script>
+{% endblock %}

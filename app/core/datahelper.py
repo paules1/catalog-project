@@ -54,6 +54,12 @@ class DataHelper:
         except SQLAlchemyError:
             return None
 
+    def add_new_user(self, user_data):
+        user_id = self.get_user_id(user_data['email'])
+        if user_id in None:
+            user_id = self.create_user(user_data)
+        return user_id
+
     def create_category(self, category_data):
         new_category = Category(
             name=category_data['name'],
@@ -145,7 +151,7 @@ class DataHelper:
             self.session.close()
             return car_id
         except SQLAlchemyError:
-            return None
+            return 0
 
     def get_categories(self):
         return self.session.query(Category).order_by('name').all()

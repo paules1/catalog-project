@@ -57,5 +57,18 @@ def by_category(category_name):
                            cars=cars, category_id=category_id)
 
 
+@app.route('/car/add', methods=['GET', 'POST'])
+def add_car():
+    if request.method == 'GET':
+        dh = DataHelper()
+        categories = dh.get_categories()
+        brands = dh.get_brands()
+        return render_template('add_car.html', categories=categories, brands=brands)
+    else:
+        return 'Submitted..'
+
+
+
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8000)
