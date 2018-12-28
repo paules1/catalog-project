@@ -20,17 +20,17 @@ class DataHelper:
         return True
 
     def import_categories(self, file_name):
-        for brand_name in open(file_name, 'r').readlines():
-            if self.get_category_id(brand_name) is None:
+        for category_name in open(file_name, 'r').readlines():
+            if self.get_category_id(category_name.strip()) is None:
                 self.create_category({
-                    'name': brand_name
+                    'name': category_name.strip()
                 })
 
     def import_brands(self, file_name):
         for brand_name in open(file_name, 'r').readlines():
-            if self.get_brand_id(brand_name) is None:
+            if self.get_brand_id(brand_name.strip()) is None:
                 self.create_brand({
-                    'name': brand_name
+                    'name': brand_name.strip()
                 })
 
     def create_user(self, user_session):
