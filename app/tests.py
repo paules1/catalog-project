@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import unittest
-from services.dataservice import DataService
+from dataservice import DataService
 
 
 class TestDataMethods(unittest.TestCase):

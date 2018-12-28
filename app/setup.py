@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-from services.dataservice import DataService
+from dataservice import DataService
 
 if __name__ == '__main__':
     ds = DataService()

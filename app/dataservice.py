@@ -1,11 +1,11 @@
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy import create_engine
-from models import Category
+from models import Base
 from models import Brand
 from models import Car
+from models import Category
 from models import User
-from models import Base
 
 
 class DataService:
