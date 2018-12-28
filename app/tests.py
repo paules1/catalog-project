@@ -17,6 +17,26 @@ class TestDataMethods(unittest.TestCase):
             })
         self.assertEquals(ds.get_user_info(user_id).email, 'paules@mercabyte.com')
 
+    def test_car_create(self):
+        ds = DataService()
+        car_id = ds.get_car_id('Boxster', 1)
+        if car_id is None:
+            car_id = ds.create_car({
+                'model': 'Boxster',
+                'price': '$25,000',
+                'description': '2011 Porsche Boxster, Red, Manual Transmission',
+                'category_id': 2,
+                'brand_id': 29,
+                'user_id': 1
+            })
+        self.assertEquals(ds.get_car_info(car_id).model, 'Boxster')
+
+    def test_delete_car(self):
+        ds = DataService()
+        car_id = ds.get_car_id('Boxster', 1)
+        result = ds.delete_car(car_id, 1)
+        self.assertTrue(result > 0)
+
 
 if __name__ == '__main__':
     unittest.main()

@@ -29,13 +29,13 @@ class Brand(Base):
     name = Column(String(250), nullable=False)
 
 
-class Cars(Base):
+class Car(Base):
     __tablename__ = 'cars'
 
     id = Column(Integer, primary_key=True)
-    year = Column(Integer, nullable=False)
     model = Column(String(250), nullable=False)
     description = Column(String(1024), nullable=False)
+    price = Column(String(250), nullable=False)
     category_id = Column(Integer, ForeignKey('categories.id'))
     category = relationship(Category)
     brand_id = Column(Integer, ForeignKey('brands.id'))

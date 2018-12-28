@@ -3,6 +3,7 @@ from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy import create_engine
 from models import Category
 from models import Brand
+from models import Car
 from models import User
 from models import Base
 
@@ -91,5 +92,53 @@ class DataService:
                 name=brand_name
             ).one()
             return user.id
+        except SQLAlchemyError:
+            return None
+
+    def create_car(self, car_data):
+        new_car = Car(
+            model=car_data['model'],
+            description=car_data['description'],
+            price=car_data['price'],
+            category_id=car_data['category_id'],
+            brand_id=car_data['brand_id'],
+            user_id=car_data['user_id'],
+        )
+        self.session.add(new_car)
+        self.session.commit()
+        car = self.session.query(Car).filter_by(
+            model=car_data['model'],
+            user_id=car_data['user_id'],
+        ).one()
+        self.session.close()
+        return car.id
+
+    def get_car_id(self, car_model, user_id):
+        try:
+            user = self.session.query(Car).filter_by(
+                model=car_model,
+                user_id=user_id
+            ).one()
+            self.session.close()
+            return user.id
+        except SQLAlchemyError:
+            return None
+
+    def get_car_info(self, car_id):
+        car = self.session.query(Car).filter_by(id=car_id).one()
+        return car
+
+    def delete_car(self, car_id, user_id):
+        try:
+            car = self.session.query(Car).filter_by(
+                id=car_id,
+                user_id=user_id
+            ).one()
+            car_id = car.id
+            if car_id > 0:
+                self.session.delete(car)
+                self.session.commit()
+            self.session.close()
+            return car_id
         except SQLAlchemyError:
             return None
