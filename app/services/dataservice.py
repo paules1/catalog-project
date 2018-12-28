@@ -142,3 +142,9 @@ class DataService:
             return car_id
         except SQLAlchemyError:
             return None
+
+    def get_categories(self):
+        return self.session.query(Category).order_by('name').all()
+
+    def get_brands(self):
+        return self.session.query(Brand).order_by('name').all()

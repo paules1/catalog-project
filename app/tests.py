@@ -37,6 +37,16 @@ class TestDataMethods(unittest.TestCase):
         result = ds.delete_car(car_id, 1)
         self.assertTrue(result > 0)
 
+    def test_categories_list(self):
+        ds = DataService()
+        result = ds.get_categories()
+        self.assertTrue(len(result) == 11)
+
+    def test_brand_list(self):
+        ds = DataService()
+        result = ds.get_brands()
+        self.assertTrue(len(result) == 37)
+
 
 if __name__ == '__main__':
     unittest.main()
