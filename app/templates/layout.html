@@ -11,8 +11,8 @@
 <body>
     <div class="jumbotron jumbotron-fluid">
       <div class="container">
-        <h1 class="display-4 text-center">C@r C@t@log</h1>
-          <p class="lead text-center"><i class="fa fa-coffee"></i> Check car listings near you</p>
+        <h1 class="display-4 text-center">Car Catalog</h1>
+        <p class="lead text-center"><i class="fa fa-car"></i> Check cars for sale near you</p>
       </div>
     </div>
     <div class="container-fluid">
@@ -21,12 +21,20 @@
                 <nav class="nav nav-pills nav-justified">
                     <a class="nav-item nav-link text-right" href="{{url_for('home')}}"><i class="fa fa-user"></i> Login</a>
                 </nav>
-                <div class="col-md-12">
-                    {% block body %}
-                    {% endblock %}
+                <div class="row">
+                    <div class="col-md-12">
+                        {% block body %}
+                        {% endblock %}
+                    </div>
                 </div>
             </div>
         </div>
+        <div class="row">
+            <div class="col-md-12 text-center p-4">
+                Car Catalog &copy;2019
+            </div>
+        </div>
+
     </div>
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

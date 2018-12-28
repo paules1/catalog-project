@@ -1,6 +1,7 @@
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy import create_engine
+from sqlalchemy import desc
 from models import Base
 from models import Brand
 from models import Car
@@ -125,8 +126,11 @@ class DataHelper:
             return None
 
     def get_car_info(self, car_id):
-        car = self.session.query(Car).filter_by(id=car_id).one()
-        return car
+        try:
+            car = self.session.query(Car).filter_by(id=car_id).one()
+            return car
+        except SQLAlchemyError:
+            return None
 
     def delete_car(self, car_id, user_id):
         try:
@@ -148,3 +152,24 @@ class DataHelper:
 
     def get_brands(self):
         return self.session.query(Brand).order_by('name').all()
+
+    def get_recent_listings(self):
+        try:
+            return self.session.query(Car).order_by(desc('id'))\
+                .limit(10).all()
+        except SQLAlchemyError:
+            return []
+
+    def get_category_listings(self, category_name):
+        try:
+            category_id = self.get_category_id(category_name)
+            print category_name
+            if category_id > 0:
+                return category_id, self.session.query(Car)\
+                    .filter_by(category_id=category_id)\
+                    .order_by('model')\
+                    .all()
+            else:
+                return 0, []
+        except SQLAlchemyError:
+            return 0, []

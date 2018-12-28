@@ -25,18 +25,37 @@ from core.datahelper import DataHelper
 app = Flask(__name__)
 app.secret_key = 'super_secret_key'
 app.debug = True
+app.static_folder = 'static'
 
 
 @app.route('/', methods=['GET'])
 def home():
     dh = DataHelper()
     categories = dh.get_categories()
-    return render_template('home.html', categories=categories)
+    cars = dh.get_recent_listings()
+    return render_template('public_home.html', categories=categories, cars=cars)
 
 
-@app.route('/<category_name>/list')
-def by_category():
-    return 'By Category..'
+@app.route('/<int:car_id>/view')
+def show_car(car_id):
+    dh = DataHelper()
+    car = dh.get_car_info(car_id)
+    if car is None:
+        return render_template('not_found.html')
+    else:
+        return render_template('public_car_view.html', car=car)
+
+
+@app.route('/<string:category_name>/listings')
+def by_category(category_name):
+    dh = DataHelper()
+    categories = dh.get_categories()
+    category_id, cars = \
+        dh.get_category_listings(
+            string.capwords(category_name.replace('+', ' ')))
+    return render_template('public_category_listings.html', categories=categories,
+                           cars=cars, category_id=category_id)
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8000)

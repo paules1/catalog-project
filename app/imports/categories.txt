@@ -7,5 +7,5 @@ Sedans
 Sports Cars
 Trucks
 SUVs
-Minivans/Vans
+Minivans
 Station Wagons

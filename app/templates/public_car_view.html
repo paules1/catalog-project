@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+{% block body %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="d-block p-2 mb-2 bg-dark text-white">{{car.model}}</div>
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <div>
+                        <span>Brand:</span> {{car.brand.name}}<br>
+                        <span>Price:</span> {{car.price}}<br>
+                        <span>Category:</span> {{car.category.name}}<br>
+                        <span>Contact:</span> {{car.user.email}}
+                    </div>
+                    <hr>
+                    <div>
+                        {{ car.description }}
+                    </div>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+{% endblock %}
