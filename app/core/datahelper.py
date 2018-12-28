@@ -8,7 +8,7 @@ from models import Category
 from models import User
 
 
-class DataService:
+class DataHelper:
 
     def __init__(self):
         self.engine = create_engine('postgresql:///catalog')
