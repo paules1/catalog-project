@@ -11,7 +11,7 @@
     {% endwith %}
     <div class="row">
         <div class="col-md-12">
-            <div class="d-block p-2 bg-dark text-white">{{car.model}}</div>
+            <div class="d-block p-2 bg-dark text-white text-center">{{car.brand.name}} - {{car.model}}</div>
         </div>
     </div>
     <div class="row">
@@ -20,7 +20,11 @@
                     <div>
                         <span>Brand:</span> {{car.brand.name}}<br>
                         <span>Price:</span> {{car.price}}<br>
-                        <span>Category:</span> {{car.category.name}}<br>
+                        <span>Category:</span>
+                        <a href="{{url_for('by_category', category_name=car.category.name.lower().replace(' ','+'))}}">
+                        {{car.category.name}}
+                        </a>
+                        <br>
                         <span>Contact:</span> <a href="mailto:{{car.user.email}}">{{car.user.email}}</a>
                     </div>
             </div>
