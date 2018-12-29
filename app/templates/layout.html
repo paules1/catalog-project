@@ -9,6 +9,23 @@
     <link rel="stylesheet" href="{{url_for('static',filename='styles.css')}}">
 </head>
 <body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="col-xs-12 col-m-8 col-md-8 col-lg-8 col-xl-8 offset-sm-2 offset-md-2 offset-l-2 offset-xl-2">
+                    <nav class="nav nav-pills">
+                        {% if request.endpoint != 'home' %}
+                        <a class="nav-item nav-link" href="{{url_for('home')}}"><i class="fa fa-home"></i> Home</a>
+                        {% endif %}
+                        {% if request.endpoint != 'add_car' %}
+                        <a class="nav-item nav-link" href="{{url_for('add_car')}}"><i class="fa fa-plus"></i> Add Car</a>
+                        {% endif %}
+                        <a class="nav-item nav-link float-right" href="{{url_for('home')}}"><i class="fa fa-user"></i> Login</a>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="jumbotron jumbotron-fluid">
       <div class="container">
         <h1 class="display-4 text-center">Car Catalog</h1>
@@ -17,11 +34,7 @@
     </div>
     <div class="container-fluid">
         <div class="row">
-            <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8 col-xl-8 offset-sm-2 offset-md-2 offset-l-2 offset-xl-2">
-                <nav class="nav nav-pills nav-justified">
-                    <a class="nav-item nav-link text-left" href="{{url_for('add_car')}}"><i class="fa fa-plus"></i> Add Car</a>
-                    <a class="nav-item nav-link text-right" href="{{url_for('home')}}"><i class="fa fa-user"></i> Login</a>
-                </nav>
+            <div class="col-xs-12 col-m-8 col-md-8 col-lg-8 col-xl-8 offset-sm-2 offset-md-2 offset-l-2 offset-xl-2">
                 <div class="row">
                     <div class="col-md-12">
                         {% block body %}

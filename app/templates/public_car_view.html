@@ -11,26 +11,39 @@
     {% endwith %}
     <div class="row">
         <div class="col-md-12">
-            <div class="d-block p-2 mb-2 bg-dark text-white">{{car.model}}</div>
-            <ul class="list-group">
-                <li class="list-group-item">
+            <div class="d-block p-2 bg-dark text-white">{{car.model}}</div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="border rounded p-3 mt-3">
                     <div>
                         <span>Brand:</span> {{car.brand.name}}<br>
                         <span>Price:</span> {{car.price}}<br>
                         <span>Category:</span> {{car.category.name}}<br>
-                        <span>Contact:</span> {{car.user.email}}
+                        <span>Contact:</span> <a href="mailto:{{car.user.email}}">{{car.user.email}}</a>
                     </div>
-                    <hr>
-                    <div>
-                        {{ car.description }}
-                    </div>
-                    <a href="{{ url_for('delete_car', car_id=car.id) }}"
-                       class="btn btn-sm btn-outline-danger float-right ml-2">Delete</a>
-                    <a href="{{ url_for('edit_car', car_id=car.id) }}"
-                    class="btn btn-sm btn-outline-primary float-right">Edit</a>
-                </li>
-            </ul>
-
+            </div>
         </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+        <div class="border rounded p-3 mt-3">
+            <ul class="list-group list-group-flush">
+            {% for item in car.description.split(',') %}
+                <li class="list-group-item">{{ item }}</li>
+            {% endfor %}
+            </ul>
+        </div>
+        </div>
+        <div class="col-md-6 p-3">
+            <a href="{{ url_for('delete_car', car_id=car.id) }}"
+               class="btn btn-sm btn-outline-danger float-right ml-2">Delete</a>
+            <a href="{{ url_for('edit_car', car_id=car.id) }}"
+            class="btn btn-sm btn-outline-primary float-right">Edit</a>
+        </div>
+
+    </div>
+    <div class="row">
     </div>
 {% endblock %}
