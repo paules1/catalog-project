@@ -2,6 +2,7 @@ from sqlalchemy import Column
 from sqlalchemy import ForeignKey
 from sqlalchemy import Integer
 from sqlalchemy import String
+from sqlalchemy.ext.hybrid import hybrid_property
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 
@@ -21,6 +22,13 @@ class Category(Base):
     __tablename__ = 'categories'
     id = Column(Integer, primary_key=True)
     name = Column(String(250), nullable=False)
+    cars = relationship('Car',
+                        order_by="desc(Car.model)",
+                        primaryjoin="Car.category_id==Category.id"
+                        )
+    @hybrid_property
+    def car_count(self):
+        return len(self.cars)
 
 
 class Brand(Base):

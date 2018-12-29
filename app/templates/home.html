@@ -14,8 +14,13 @@
             <div class="d-block p-2 mb-2 bg-primary text-white text-center">Search by Category</div>
             <ul class="list-group">
             {%for category in categories%}
-                <li class="list-group-item">
-                    <a href="{{url_for('by_category', category_name=category.name.lower().replace(' ','+'))}}">{{category.name}}</a>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <a href="{{url_for('by_category', category_name=category.name.lower().replace(' ','+'))}}">
+                        {{category.name}}
+                    </a>
+                    {% if category.car_count > 0 %}
+                    <span class="badge badge-primary badge-pill">{{ category.car_count }}</span>
+                    {% endif %}
                 </li>
             {%endfor%}
             </ul>

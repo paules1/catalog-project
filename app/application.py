@@ -281,5 +281,12 @@ def logout():
         return response
 
 
+@app.route('/catalog.json')
+def full_catalog():
+    dh = DataHelper()
+    menu_items = dh.get_items(restaurant_id)
+    return jsonify(menu_items=[item.serialize for item in menu_items])
+
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8000)
