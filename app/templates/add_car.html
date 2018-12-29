@@ -63,7 +63,8 @@
                            value="{{ car.price }}" required>
                     <small id="descriptionHelp" class="form-text text-muted">Use comma for thousands separator.</small>
                 </div>
-              <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="submit" class="btn btn-primary">Submit</button>
+                <a href="{{ request.referrer or url_for('home') }}" class="btn btn-secondary">Cancel</a>
             </form>
         </div>
     </div>
