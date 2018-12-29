@@ -76,6 +76,7 @@ class Car(Base):
             'model': self.model,
             'description': self.description,
             'price': self.price,
-            'brand': self.brand.name
+            'brand': self.brand.name,
+            'contact': self.user.email
         }
 
