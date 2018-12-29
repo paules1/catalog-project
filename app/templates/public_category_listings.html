@@ -28,7 +28,14 @@
                             <span>Brand:</span> {{car.brand.name}}<br>
                             <span>Price:</span> {{car.price}}<br>
                             <span>Category:</span> {{car.category.name}}
+                            <a href="{{ url_for('delete_car', car_id=car.id) }}"
+                               class="btn btn-sm btn-outline-danger float-right ml-2">Delete</a>
+                            <a href="{{ url_for('edit_car', car_id=car.id) }}"
+                            class="btn btn-sm btn-outline-primary float-right">Edit</a>
                         </div>
+                        <span class="pull-right">
+
+                        </span>
                     </li>
                 {%endfor%}
                 </ul>

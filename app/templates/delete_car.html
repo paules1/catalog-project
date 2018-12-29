@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+{% block body %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="d-block p-2 mb-2 bg-dark text-white text-center">Delete Listing</div>
+            <form method="POST" action="{{ url_for('delete_car', car_id=car.id)}}">
+                <div class="alert alert-warning" role="alert">
+                    Confirm you want to delete the listing: "{{ car.model }}"
+                </div>
+              <button type="submit" class="btn btn-danger">Delete</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}

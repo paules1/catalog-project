@@ -25,8 +25,8 @@ if __name__ == '__main__':
             'model': 'Boxster',
             'price': '$25,000',
             'description': '2011 Porsche Boxster, Red, Manual Transmission',
-            'category_id': category_id,
-            'brand_id': brand_id,
+            'category': category_id,
+            'brand': brand_id,
             'user_id': user_id
         })
     car_id = ds.get_car_id('Boxster S', user_id)
@@ -35,8 +35,8 @@ if __name__ == '__main__':
             'model': 'Boxster S',
             'price': '$30,000',
             'description': '2011 Porsche Boxster S, Black, Automatic Transmission',
-            'category_id': category_id,
-            'brand_id': brand_id,
+            'category': category_id,
+            'brand': brand_id,
             'user_id': user_id
         })
 

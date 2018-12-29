@@ -28,8 +28,8 @@ class TestDataMethods(unittest.TestCase):
                 'model': 'Boxster Test',
                 'price': '$25,000',
                 'description': '2011 Porsche Boxster, Red, Manual Transmission',
-                'category_id': category_id,
-                'brand_id': brand_id,
+                'category': category_id,
+                'brand': brand_id,
                 'user_id': user_id
             })
         self.assertEquals(ds.get_car_info(car_id).model, 'Boxster Test')
@@ -50,6 +50,22 @@ class TestDataMethods(unittest.TestCase):
         ds = DataHelper()
         result = ds.get_brands()
         self.assertTrue(len(result) == 37)
+
+    def test_car_update(self):
+        ds = DataHelper()
+        user_id = ds.get_user_id('jd@domain.com')
+        car_id = ds.get_car_id('Boxster Test', user_id)
+        car_info = ds.get_car_info(car_id)
+        car = {
+            'category': car_info.category_id,
+            'brand': car_info.brand_id,
+            'model': car_info.model,
+            'description': car_info.description,
+            'price': '$27,000',
+            'id': car_info.id
+        }
+        result = ds.update_car(car)
+        self.assertTrue(result)
 
 
 if __name__ == '__main__':

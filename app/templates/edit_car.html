@@ -2,7 +2,7 @@
 {% block body %}
     <div class="row">
         <div class="col-md-12">
-            <div class="d-block p-2 mb-2 bg-dark text-white">Add Car Listing</div>
+            <div class="d-block p-2 mb-2 bg-dark text-white">Edit Listing</div>
             {% with messages = get_flashed_messages() %}
             {% if messages %}
                 {%for message in messages%}
@@ -12,11 +12,10 @@
                 {%endfor%}
             {% endif %}
             {% endwith %}
-            <form method="POST" action="{{ url_for('add_car')}}" class="needs-validation" novalidate>
+            <form method="POST" action="{{ url_for('edit_car', car_id=car.id)}}" class="needs-validation" novalidate>
                 <div class="form-group">
                     <label for="category">Category</label>
                     <select class="form-control" name="category" id="category" required>
-                        <option value="" selected disabled>Select a category</option>
                         {% for category in categories %}
                             {% if category.id == car.category %}
                             <option value="{{ category.id }}" selected>{{ category.name }}</option>
@@ -29,7 +28,6 @@
                 <div class="form-group">
                     <label for="category">Brand</label>
                     <select class="form-control" name="brand" id="brand" required>
-                        <option value="" selected disabled>Select a brand</option>
                         {% for brand in brands %}
                             {% if brand.id == car.brand %}
                             <option value="{{ brand.id }}" selected>{{ brand.name }}</option>
@@ -61,9 +59,9 @@
                            id="price" aria-describedby="priceHelp"
                            placeholder="Ex: $10,000"
                            value="{{ car.price }}" required>
-                    <small id="descriptionHelp" class="form-text text-muted">Use comma for thousands separator.</small>
+                    <small id="descriptionHelp" class="form-text text-muted">Use comma for thousands separator</small>
                 </div>
-              <button type="submit" class="btn btn-primary">Submit</button>
+              <button type="submit" class="btn btn-primary">Update</button>
             </form>
         </div>
     </div>

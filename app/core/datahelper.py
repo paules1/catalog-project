@@ -107,8 +107,8 @@ class DataHelper:
             model=car_data['model'],
             description=car_data['description'],
             price=car_data['price'],
-            category_id=car_data['category_id'],
-            brand_id=car_data['brand_id'],
+            category_id=car_data['category'],
+            brand_id=car_data['brand'],
             user_id=car_data['user_id'],
         )
         self.session.add(new_car)
@@ -119,6 +119,23 @@ class DataHelper:
         ).one()
         self.session.close()
         return car.id
+
+    def update_car(self, car_data):
+        try:
+            car = self.session.query(Car).filter_by(
+                id=car_data['id']
+            ).one()
+            car.model = car_data['model'],
+            car.description = car_data['description'],
+            car.price = car_data['price'],
+            car.category_id = car_data['category'],
+            car.brand_id = car_data['brand']
+            self.session.add(car)
+            self.session.commit()
+            self.session.close()
+        except SQLAlchemyError:
+            return False
+        return True
 
     def get_car_id(self, car_model, user_id):
         try:
