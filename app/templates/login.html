@@ -1,0 +1,64 @@
+{% extends "layout.html" %}
+{% block head %}
+    <script src="https://apis.google.com/js/client:platform.js?onload=start" async defer></script>
+{% endblock %}
+{% block body %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="d-block p-2 mb-2 bg-dark text-white text-center">Login</div>
+            <div id="response" class="alert" role="alert" style="display:none">
+            </div>
+            <div class="p-2 mt-3 text-center">
+                <div id="signInButton">
+                    <span class="g-signin"
+                          data-scope="openid email"
+                          data-clientid="{{ google_client_id }}"
+                          data-redirecturi="postmessage"
+                          data-accesstype="offline"
+                          data-cookiepolicy="single-host-origin"
+                          data-callback="signInCallback"
+                          data-approvalprompt="force">
+                    </span>
+                </div>
+            </div>
+            <div id="loginMessage" class="alert alert-info text-center">
+                <span>Car Catalog Project uses Google for login</span>
+                <br>
+                <span>
+                    <a href="{{ url_for('home') }}" class="btn btn-secondary btn-sm">Cancel</a>
+                </span>
+            </div>
+        </div>
+    </div>
+    <script>
+        function signInCallback(authResult){
+            if(authResult['code']){
+                $('#signInButton').attr('style', 'display: none');
+                $('#loginMessage').attr('style', 'display: none');
+                $.ajax({
+                    type:'POST',
+                    url:'/google/login?state={{state}}',
+                    contentType: 'application/octet-stream; charset=utf-8',
+                    data: authResult['code'],
+                    success: function (result) {
+                        if(result){
+                            $('#response').addClass('alert-success')
+                            $('#response').attr('style', 'display: block')
+                            $('#response').html(result + '</br>Redirecting to appication Home...');
+                            setTimeout(function(){
+                                window.location.href = ('{{ next or '/' }}');
+                            }, 4000);
+                        } else if(authResult['error']){
+                            $('#response').addClass('alert-danger')
+                            $('#response').attr('style', 'display: block')
+                            $('#response').html('Login error!');
+                            console.log('There was an error: ' + authResult['error']);
+                        }
+                    }
+                });
+            } else{
+                $('#response').html('Failed to make a server side call. Check your configuration and console.')
+            }
+        }
+    </script>
+{% endblock %}

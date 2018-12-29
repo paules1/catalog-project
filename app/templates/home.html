@@ -1,5 +1,14 @@
 {% extends "layout.html" %}
 {% block body %}
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+        {%for message in messages%}
+        <div class="alert alert-info" role="alert">
+            {{ message }}
+        </div>
+        {%endfor%}
+    {% endif %}
+    {% endwith %}
     <div class="row">
         <div class="col-md-4">
             <div class="d-block p-2 mb-2 bg-primary text-white text-center">Search by Category</div>
@@ -21,10 +30,12 @@
                         <span>Brand:</span> {{car.brand.name}}<br>
                         <span>Price:</span> {{car.price}}<br>
                         <span>Category:</span> {{car.category.name}}
+                        {% if car.user_id == user %}
                         <a href="{{ url_for('delete_car', car_id=car.id) }}"
                            class="btn btn-sm btn-outline-danger float-right ml-2">Delete</a>
                         <a href="{{ url_for('edit_car', car_id=car.id) }}"
                         class="btn btn-sm btn-outline-primary float-right">Edit</a>
+                        {% endif %}
                     </div>
                 </li>
             {%endfor%}
