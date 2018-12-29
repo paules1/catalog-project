@@ -284,8 +284,8 @@ def logout():
 @app.route('/catalog.json')
 def full_catalog():
     dh = DataHelper()
-    menu_items = dh.get_items(restaurant_id)
-    return jsonify(menu_items=[item.serialize for item in menu_items])
+    catalog = dh.get_catalog()
+    return jsonify(catalog={'categories': [item.serialize for item in catalog]})
 
 
 if __name__ == '__main__':

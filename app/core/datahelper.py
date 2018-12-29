@@ -196,3 +196,6 @@ class DataHelper:
                 return 0, []
         except SQLAlchemyError:
             return 0, []
+
+    def get_catalog(self):
+        return self.session.query(Category).order_by('name').all()
