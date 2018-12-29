@@ -1,4 +1,4 @@
 .idea/
 .vagrant/
 *.pyc
-client_secrets.json
+app/client_secrets.json
