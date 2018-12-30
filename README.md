@@ -27,7 +27,7 @@ $ python application.py
 ```
 The web server will start listening on <a href="http://localhost:8000">http://localhost:8000</a>.
 
-####JSON Endpoint
+#### JSON Endpoint
 The app implements a json endpoint at <a href="http://localhost:8000/catalog.json">http://localhost:8000/catalog.json</a> which will serve the same information available at the HTML endpoints 
 
 #### Setting up Google API  
