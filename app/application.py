@@ -187,6 +187,7 @@ def delete_car(car_id):
 
 @app.route('/login')
 def login():
+    # Create anti-forgery state token
     state = ''.join(
         random.choice(
             string.ascii_uppercase + string.digits) for x in range(32))
@@ -197,11 +198,19 @@ def login():
 
 @app.route('/google/login', methods=['POST'])
 def google_login():
+    """
+    Code based on Udacity Lessons examples and refactored to
+    integrate with latest Google Api
+    """
     if request.args.get('state') != login_session['state']:
         response = make_response(json.dumps('Invalid state parameter'), 401)
         response.headers['Content-Type'] = 'application/json'
         return response
+
+    # Receive code from google redirect
     code = request.data
+
+    # Upgrade the authorization code into a credentials object
     try:
         oauth_flow = flow_from_clientsecrets('client_secret.json', scope='')
         oauth_flow.redirect_uri = 'postmessage'
@@ -211,6 +220,8 @@ def google_login():
             json.dumps('Failed to upgrade the authorization code'), 401)
         response.headers['Content-Type'] = 'application/json'
         return response
+
+    # Check access token
     access_token = credentials.access_token
     url = ('https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=%s'
            % access_token)
@@ -220,6 +231,8 @@ def google_login():
         response = make_response(json.dumps(result.get('error'), 500))
         response.headers['Content-Type'] = 'application/json'
         return response
+
+    # Verify that the access token is used for the intended user.
     g_plus_id = credentials.id_token['sub']
     if result['user_id'] != g_plus_id:
         response = make_response(
@@ -232,25 +245,30 @@ def google_login():
                        'match given user ID.'), 401)
         response.headers['Content-Type'] = 'application/json'
         return response
+
+    # Check if user already connected
     stored_credentials = login_session.get('credentials')
     stored_g_plus_id = login_session.get('g_plus_id')
-
     if stored_credentials is not None and g_plus_id == stored_g_plus_id:
         response = make_response(
             json.dumps('Current user already connected'), 200)
         response.headers['Content-Type'] = 'application/json'
         return response
+
+    # Store credentials in session
     login_session['credentials'] = credentials.access_token
     login_session['g_plus_id'] = g_plus_id
+
+    # Get user info and store it in session
     user_info_url = "https://www.googleapis.com/oauth2/v1/userinfo"
     params = {'access_token': credentials.access_token, 'alt': 'json'}
     answer = requests.get(user_info_url, params=params)
-    print(answer.text)
     data = json.loads(answer.text)
     login_session['username'] = data['email']
     login_session['picture'] = data['picture']
     login_session['email'] = data['email']
 
+    # Register user
     dh = DataHelper()
     user_id = dh.get_user_id(login_session['email'])
     if not user_id:
@@ -266,6 +284,10 @@ def google_login():
 
 @app.route('/logout')
 def logout():
+    """
+    Code based on Udacity Lessons examples and refactored to
+    integrate with latest Google Api
+    """
     credentials = login_session.get('credentials')
     if credentials is None:
         response = make_response(json.dumps('Current User not connected'), 401)

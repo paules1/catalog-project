@@ -31,6 +31,10 @@
         </div>
     </div>
     <script>
+    /*
+    Code based on Udacity Lessons examples and refactored to
+    integrate with application front end
+    */
         function signInCallback(authResult){
             if(authResult['code']){
                 $('#signInButton').attr('style', 'display: none');
