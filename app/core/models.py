@@ -79,4 +79,3 @@ class Car(Base):
             'brand': self.brand.name,
             'contact': self.user.email
         }
-

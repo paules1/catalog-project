@@ -45,7 +45,7 @@ To enable the Login functionality the follow these steps:
 * A popup with the client id and secret key will appear. Press Ok.
 * The new OAuth id will appear on the list.
 * Press the download button to download the client_secret.json
-* Rename the file to client_secrets.json and use it to replace the existing file located on the /app folder of the repository.
+* Replace the existing file located on the /app folder of the repository with the download.
 
 The app is now ready to connect to Google.
 

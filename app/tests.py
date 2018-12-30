@@ -27,7 +27,7 @@ class TestDataMethods(unittest.TestCase):
             car_id = ds.create_car({
                 'model': 'Boxster Test',
                 'price': '$25,000',
-                'description': '2011 Porsche Boxster, Red, Manual Transmission',
+                'description': '2011 Porsche Boxster, Red',
                 'category': category_id,
                 'brand': brand_id,
                 'user_id': user_id

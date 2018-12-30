@@ -9,7 +9,6 @@ from flask import render_template
 from flask import request
 from flask import flash
 from flask import jsonify
-from flask import abort
 from flask import redirect
 from flask import url_for
 from flask import session as login_session
@@ -19,7 +18,8 @@ from oauth2client.client import FlowExchangeError
 from oauth2client.client import flow_from_clientsecrets
 from core.datahelper import DataHelper
 
-CLIENT_ID = json.loads(open('client_secrets.json', 'r').read())['web']['client_id']
+CLIENT_ID = json.loads(
+    open('client_secret.json', 'r').read())['web']['client_id']
 
 app = Flask(__name__)
 app.secret_key = 'super_secret_key'
@@ -44,7 +44,8 @@ def home():
         user_id = dh.get_user_id(login_session['email'])
     categories = dh.get_categories()
     cars = dh.get_recent_listings()
-    return render_template('home.html', categories=categories, cars=cars, user=user_id)
+    return render_template('home.html',
+                           categories=categories, cars=cars, user=user_id)
 
 
 @app.route('/<int:car_id>/view')
@@ -90,8 +91,8 @@ def add_car():
             'description': '',
             'price': ''
         }
-        return render_template(
-            'add_car.html', categories=categories, brands=brands, car=car, user=user_id)
+        return render_template('add_car.html', categories=categories,
+                               brands=brands, car=car, user=user_id)
     else:
         car = {
             'category': int(request.form['category']),
@@ -187,9 +188,11 @@ def delete_car(car_id):
 @app.route('/login')
 def login():
     state = ''.join(
-        random.choice(string.ascii_uppercase + string.digits) for x in range(32))
+        random.choice(
+            string.ascii_uppercase + string.digits) for x in range(32))
     login_session['state'] = state
-    return render_template('login.html', state=state, google_client_id=CLIENT_ID)
+    return render_template('login.html', state=state,
+                           google_client_id=CLIENT_ID)
 
 
 @app.route('/google/login', methods=['POST'])
@@ -200,15 +203,17 @@ def google_login():
         return response
     code = request.data
     try:
-        oauth_flow = flow_from_clientsecrets('client_secrets.json', scope='', )
+        oauth_flow = flow_from_clientsecrets('client_secret.json', scope='')
         oauth_flow.redirect_uri = 'postmessage'
         credentials = oauth_flow.step2_exchange(code)
     except FlowExchangeError:
-        response = make_response(json.dumps('Failed to upgrade the authorization code'), 401)
+        response = make_response(
+            json.dumps('Failed to upgrade the authorization code'), 401)
         response.headers['Content-Type'] = 'application/json'
         return response
     access_token = credentials.access_token
-    url = ('https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=%s' % access_token)
+    url = ('https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=%s'
+           % access_token)
     h = httplib2.Http()
     result = json.loads(h.request(url, 'GET')[1])
     if result.get('error') is not None:
@@ -217,18 +222,22 @@ def google_login():
         return response
     g_plus_id = credentials.id_token['sub']
     if result['user_id'] != g_plus_id:
-        response = make_response(json.dumps('Token\'s user ID doesn\'t match given user ID.'), 401)
+        response = make_response(
+            json.dumps('Token\'s user ID doesn\'t match given user ID.'), 401)
         response.headers['Content-Type'] = 'application/json'
         return response
     if result['issued_to'] != CLIENT_ID:
-        response = make_response(json.dumps('Token\'s client ID doesn\'t match given user ID.'), 401)
+        response = make_response(
+            json.dumps('Token\'s client ID doesn\'t '
+                       'match given user ID.'), 401)
         response.headers['Content-Type'] = 'application/json'
         return response
     stored_credentials = login_session.get('credentials')
     stored_g_plus_id = login_session.get('g_plus_id')
 
     if stored_credentials is not None and g_plus_id == stored_g_plus_id:
-        response = make_response(json.dumps('Current user already connected'), 200)
+        response = make_response(
+            json.dumps('Current user already connected'), 200)
         response.headers['Content-Type'] = 'application/json'
         return response
     login_session['credentials'] = credentials.access_token
@@ -285,7 +294,8 @@ def logout():
 def full_catalog():
     dh = DataHelper()
     catalog = dh.get_catalog()
-    return jsonify(catalog={'categories': [item.serialize for item in catalog]})
+    return jsonify(
+        catalog={'categories': [item.serialize for item in catalog]})
 
 
 if __name__ == '__main__':

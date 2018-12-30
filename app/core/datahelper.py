@@ -35,11 +35,13 @@ class DataHelper:
                 })
 
     def create_user(self, user_session):
-        new_user = User(name=user_session['username'], email=user_session['email'],
+        new_user = User(name=user_session['username'],
+                        email=user_session['email'],
                         picture=user_session['picture'])
         self.session.add(new_user)
         self.session.commit()
-        user = self.session.query(User).filter_by(email=user_session['email']).one()
+        user = self.session.query(User)\
+            .filter_by(email=user_session['email']).one()
         self.session.close()
         return user.id
 

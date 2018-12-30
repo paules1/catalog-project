@@ -34,9 +34,8 @@ if __name__ == '__main__':
         car_id = ds.create_car({
             'model': 'Boxster S',
             'price': '$30,000',
-            'description': '2011 Porsche Boxster S, Black, Automatic Transmission',
+            'description': '2011 Porsche Boxster S, Black, Automatic',
             'category': category_id,
             'brand': brand_id,
             'user_id': user_id
         })
-
