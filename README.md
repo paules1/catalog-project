@@ -1,4 +1,4 @@
-# Catalog Project
+# Car Catalog Project
 
 The project consist on creating a _web application_ to manage a cars for sale catalog. Users can freely navigate the catalog, but will need a Google account to login, post, edit, or delete their own listings. 
 
@@ -21,26 +21,33 @@ Move to the /catalog/app folder, and execute:
 $ cd /catalog/app
 $ python setup.py
 ```
-That'll create the tables and test data. To start the web app then execute:
+That'll create the tables and initial data. To start the web server then execute:
 ```
 $ python application.py
 ```
-The web server starts listening on <a href="http://localhost:8000">http://localhost:8000</a>. You should be able to navigate through the sample data.
+The web server will start listening on <a href="http://localhost:8000">http://localhost:8000</a>.
 
+####JSON Endpoint
 The app implements a json endpoint at <a href="http://localhost:8000/catalog.json">http://localhost:8000/catalog.json</a> which will serve the same information available at the HTML endpoints 
 
 #### Setting up Google API  
 
-Before login into the app, you need to create the Google Auth credentials:
+To enable the Login functionality the follow these steps:
 
-* Go to your app's page in the Google APIs Console — https://console.developers.google.com/apis
+* Create a Google account if you don't have one.
+* Navigate to <a href="https://console.developers.google.com/apis/dashboard">https://console.developers.google.com/apis/dashboard</a>
+* Select/Create a project
+* From the project's menu select APIs and Services
 * Choose Credentials from the menu on the left.
-* Create an OAuth Client ID.
-* This will require you to configure the consent screen.
-* When you're presented with a list of application types, choose Web application.
-* You will then be able to get the client ID and client secret.
+* Press the Create Credentials button and select Create OAuth Client ID.
+* Select Web Application from the Application Type options.
+* Type a name for the App and add http://localhost:8000 to the Authorized JavaScript origins.  
+* A popup with the client id and secret key will appear. Press Ok.
+* The new OAuth id will appear on the list.
+* Press the download button to download the client_secret.json
+* Rename the file to client_secrets.json and use it to replace the existing file located on the /app folder of the repository.
 
-Download the client secret as a JSON data file once you have created the credentials and replace the _client_secrets.json_ file found on the root folder of the app.
+The app is now ready to connect to Google.
 
 
 **Project Status**
