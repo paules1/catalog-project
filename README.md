@@ -32,7 +32,7 @@ The app implements a json endpoint at <a href="http://localhost:8000/catalog.jso
 
 #### Setting up Google API  
 
-To enable the Login functionality the follow these steps:
+To enable the Login functionality follow these steps:
 
 * Create a Google account if you don't have one.
 * Navigate to <a href="https://console.developers.google.com/apis/dashboard">https://console.developers.google.com/apis/dashboard</a>
